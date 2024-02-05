@@ -9,6 +9,7 @@
 - [RabbitMQ Driver](https://github.com/rabbitmq/amqp091-go)
 - [SQLX Database Helper](https://github.com/jmoiron/sqlx)
 - [OpenTelemetryGo](https://github.com/open-telemetry/opentelemetry-go)
+- [go-elasticsearch](https://www.elastic.co/guide/en/elasticsearch/client/go-api/current/overview.html)
 
 
 ## System Requirements
