@@ -9,4 +9,3 @@
 - [RabbitMQ Driver](https://github.com/rabbitmq/amqp091-go)
 - [SQLX Database Helper](https://github.com/jmoiron/sqlx)
 - [OpenTelemetryGo](https://github.com/open-telemetry/opentelemetry-go)
-
