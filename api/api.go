@@ -1,6 +1,8 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/swaggo/echo-swagger"
@@ -10,7 +12,7 @@ import (
 	"gitlab.snappcloud.io/doctor/backend/template/storage"
 )
 
-func NewAPIServer(db *storage.MySQL, redis *storage.Redis, l logger.Logger) *echo.Echo {
+func NewAPIServer(db *storage.MySQL, redis *storage.Redis, _ logger.Logger) *echo.Echo {
 	e := echo.New()
 
 	e.Use(echoprometheus.NewMiddleware("app_template"))
@@ -20,7 +22,7 @@ func NewAPIServer(db *storage.MySQL, redis *storage.Redis, l logger.Logger) *ech
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	e.GET("/healthz", func(c echo.Context) error {
-		return c.String(200, "OK")
+		return c.String(http.StatusOK, "OK")
 	})
 
 	apiG := e.Group("/api")

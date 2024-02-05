@@ -1,13 +1,15 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo/v4"
 
 	"gitlab.snappcloud.io/doctor/backend/template/logger"
 )
 
 type SampleHandler struct {
-	l logger.Logger
+	_ logger.Logger
 }
 
 type sampleIndexRequest struct {
@@ -26,7 +28,7 @@ type sampleIndexResponse struct {
 func (s *SampleHandler) Index(c echo.Context) error {
 	var req sampleIndexRequest
 	if err := c.Bind(&req); err != nil {
-		return c.JSON(400, err.Error())
+		return c.JSON(http.StatusBadRequest, err.Error())
 	}
-	return c.JSON(200, sampleIndexResponse{})
+	return c.JSON(http.StatusOK, sampleIndexResponse{})
 }

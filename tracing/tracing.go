@@ -12,6 +12,10 @@ import (
 	"go.opentelemetry.io/otel/sdk/trace"
 )
 
+const (
+	METRIC_PERIOD_READER_INTERVAL = time.Second * 3
+)
+
 func Init() (shutdown func(ctx context.Context) error, err error) {
 	var shutdownFuncs []func(context.Context) error
 	prop := newPropagator()
@@ -65,7 +69,7 @@ func newMeterProvider() (*metric.MeterProvider, error) {
 
 	meterProvider := metric.NewMeterProvider(
 		metric.WithReader(metric.NewPeriodicReader(metricExporter,
-			metric.WithInterval(3*time.Second))),
+			metric.WithInterval(METRIC_PERIOD_READER_INTERVAL))),
 	)
 	return meterProvider, nil
 }

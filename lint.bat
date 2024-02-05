@@ -1,0 +1,3 @@
+@echo off
+
+golangci-lint run ./...
