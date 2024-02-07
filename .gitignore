@@ -1,4 +1,4 @@
 server.exe
 .idea
 .vscode
-server
+./server
