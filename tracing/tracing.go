@@ -73,6 +73,7 @@ func newMeterProvider() (*metric.MeterProvider, error) {
 	)
 	return meterProvider, nil
 }
+
 func newPropagator() propagation.TextMapPropagator {
 	return propagation.NewCompositeTextMapPropagator(
 		propagation.TraceContext{},
