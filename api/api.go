@@ -10,9 +10,15 @@ import (
 	_ "gitlab.snappcloud.io/doctor/backend/template/docs"
 	"gitlab.snappcloud.io/doctor/backend/template/logger"
 	"gitlab.snappcloud.io/doctor/backend/template/storage"
+
+	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
 )
 
-func NewAPIServer(db *storage.MySQL, redis *storage.Redis, _ logger.Logger) *echo.Echo {
+func setTracingSpanMiddleware(service string) echo.MiddlewareFunc {
+	return otelecho.Middleware(service)
+}
+
+func NewAPIServer(tracingServiceName string, db *storage.MySQL, redis *storage.Redis, _ logger.Logger) *echo.Echo {
 	e := echo.New()
 
 	e.Use(echoprometheus.NewMiddleware("app_template"))
@@ -25,7 +31,7 @@ func NewAPIServer(db *storage.MySQL, redis *storage.Redis, _ logger.Logger) *ech
 		return c.String(http.StatusOK, "OK")
 	})
 
-	apiG := e.Group("/api")
+	apiG := e.Group("/api", setTracingSpanMiddleware(tracingServiceName))
 	v1G := e.Group("/v1")
 
 	_ = apiG
