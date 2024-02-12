@@ -18,6 +18,7 @@ func getEnv(key, def string) string {
 }
 
 var (
+	TRACING_SERVICE_NAME       = getEnv("TRACING_SERVICE_NAME", "template")
 	LISTEN_ADDR                = getEnv("LISTEN_ADDR", ":8080")
 	LOG_LEVEL                  zerolog.Level
 	DATABASE_CONNECTION_STRING = getEnv("DATABASE_CONNECTION_STRING", "mysql:mysql@tcp(localhost:3306)/database")

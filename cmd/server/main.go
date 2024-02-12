@@ -9,7 +9,7 @@ import (
 	"gitlab.snappcloud.io/doctor/backend/template/tracing"
 )
 
-// @title Template API
+// @title Go Service Template API
 // @version 1.0
 
 // @contact.name Doctor Backend
@@ -17,7 +17,6 @@ import (
 // @host snapp.doctor
 // @BasePath /
 func main() {
-	_ = context.TODO()
 	l := logger.New(LOG_LEVEL)
 
 	shutdown, err := tracing.Init()
@@ -41,7 +40,7 @@ func main() {
 		panic(err)
 	}
 
-	e := api.NewAPIServer(db, redis, l)
+	e := api.NewAPIServer(TRACING_SERVICE_NAME, db, redis, l)
 
 	if err := e.Start(LISTEN_ADDR); err != nil {
 		panic(err)

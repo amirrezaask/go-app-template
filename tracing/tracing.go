@@ -5,10 +5,8 @@ import (
 	"time"
 
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/stdout/stdoutmetric"
 	"go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/propagation"
-	"go.opentelemetry.io/otel/sdk/metric"
 	"go.opentelemetry.io/otel/sdk/trace"
 )
 
@@ -27,13 +25,6 @@ func Init() (shutdown func(ctx context.Context) error, err error) {
 	}
 	shutdownFuncs = append(shutdownFuncs, tracerProvider.Shutdown)
 	otel.SetTracerProvider(tracerProvider)
-
-	meterProvider, err := newMeterProvider()
-	if err != nil {
-		return nil, err
-	}
-	shutdownFuncs = append(shutdownFuncs, meterProvider.Shutdown)
-	otel.SetMeterProvider(meterProvider)
 
 	return func(ctx context.Context) error {
 		for _, f := range shutdownFuncs {
@@ -61,18 +52,6 @@ func newTraceProvider() (*trace.TracerProvider, error) {
 	return traceProvider, nil
 }
 
-func newMeterProvider() (*metric.MeterProvider, error) {
-	metricExporter, err := stdoutmetric.New()
-	if err != nil {
-		return nil, err
-	}
-
-	meterProvider := metric.NewMeterProvider(
-		metric.WithReader(metric.NewPeriodicReader(metricExporter,
-			metric.WithInterval(METRIC_PERIOD_READER_INTERVAL))),
-	)
-	return meterProvider, nil
-}
 func newPropagator() propagation.TextMapPropagator {
 	return propagation.NewCompositeTextMapPropagator(
 		propagation.TraceContext{},
