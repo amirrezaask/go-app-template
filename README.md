@@ -10,7 +10,7 @@
 - [SQLX Database Helper](https://github.com/jmoiron/sqlx)
 - [OpenTelemetryGo](https://github.com/open-telemetry/opentelemetry-go)
 - [go-elasticsearch](https://www.elastic.co/guide/en/elasticsearch/client/go-api/current/overview.html)
-
+- [Minio](https://github.com/minio/minio-go)
 
 ## System Requirements
 
@@ -22,4 +22,10 @@
 go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2
 go install github.com/swaggo/swag/cmd/swag@latest
 go install golang.org/x/tools/cmd/goimports
+go install github.com/cosmtrek/air@latest
+```
+
+## Running
+```
+air
 ```
