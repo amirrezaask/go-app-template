@@ -12,7 +12,6 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 
 	_ "gitlab.snappcloud.io/doctor/backend/template/docs"
-	"gitlab.snappcloud.io/doctor/backend/template/logger"
 	"gitlab.snappcloud.io/doctor/backend/template/storage"
 
 	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
@@ -46,7 +45,7 @@ func setTracingSpanMiddleware(service string) echo.MiddlewareFunc {
 	return otelecho.Middleware(service)
 }
 
-func NewAPIServer(tracingServiceName string, db *storage.MySQL, redis *storage.Redis, _ logger.Logger) *echo.Echo {
+func NewAPIServer(tracingServiceName string, db *storage.MySQL, redis *storage.Redis) *echo.Echo {
 	e := echo.New()
 	e.JSONSerializer = &jsonIterSerializer{}
 

@@ -1,12 +1,12 @@
-package main
+package config
 
 import (
-	"github.com/joho/godotenv"
+	"log/slog"
 	"os"
 	"strconv"
 	"strings"
 
-	"github.com/rs/zerolog"
+	"github.com/joho/godotenv"
 )
 
 func getEnv(key, def string) string {
@@ -19,9 +19,10 @@ func getEnv(key, def string) string {
 }
 
 var (
+	DEBUG                      bool
 	TRACING_SERVICE_NAME       string
 	LISTEN_ADDR                string
-	LOG_LEVEL                  zerolog.Level
+	LOG_LEVEL                  slog.Level
 	DATABASE_CONNECTION_STRING string
 	REDIS_HOST                 string
 	REDIS_DB                   int
@@ -37,9 +38,21 @@ var (
 
 func initVariables() {
 	var err error
-	LOG_LEVEL, err = zerolog.ParseLevel(getEnv("LOG_LEVEL", "debug"))
-	if err != nil {
-		panic(err)
+
+	ll := getEnv("LOG_LEVEL", "debug")
+	if ll != "" {
+		switch ll {
+		case "debug":
+			LOG_LEVEL = slog.LevelDebug
+		case "info":
+			LOG_LEVEL = slog.LevelInfo
+		case "warn":
+			LOG_LEVEL = slog.LevelWarn
+		case "error":
+			LOG_LEVEL = slog.LevelError
+		default:
+			LOG_LEVEL = slog.LevelInfo
+		}
 	}
 	db, err := strconv.Atoi(getEnv("REDIS_DB", "0"))
 	if err != nil {

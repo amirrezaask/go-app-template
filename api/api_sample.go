@@ -4,12 +4,9 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-
-	"gitlab.snappcloud.io/doctor/backend/template/logger"
 )
 
 type SampleHandler struct {
-	_ logger.Logger
 }
 
 type sampleIndexRequest struct {

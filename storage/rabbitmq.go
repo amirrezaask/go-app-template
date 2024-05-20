@@ -2,9 +2,9 @@ package storage
 
 import (
 	"fmt"
+	"log/slog"
 
 	amqp "github.com/rabbitmq/amqp091-go"
-	"gitlab.snappcloud.io/doctor/backend/template/logger"
 )
 
 type RabbitConsumer struct {
@@ -24,7 +24,7 @@ type RabbitConsumerConfig struct {
 	AutoAck      bool
 }
 
-func NewRabbitMQConsumer(cfg RabbitConsumerConfig, messageHandler func(deliveries <-chan amqp.Delivery, done chan error), logger *logger.Logger) (*RabbitConsumer, error) {
+func NewRabbitMQConsumer(cfg RabbitConsumerConfig, messageHandler func(deliveries <-chan amqp.Delivery, done chan error)) (*RabbitConsumer, error) {
 	c := &RabbitConsumer{
 		conn:    nil,
 		channel: nil,
@@ -43,7 +43,7 @@ func NewRabbitMQConsumer(cfg RabbitConsumerConfig, messageHandler func(deliverie
 
 	go func() {
 		err := <-c.conn.NotifyClose(make(chan *amqp.Error))
-		logger.Error().Str("message", "closing rabbitmq consumer").Err(err).Send()
+		slog.Error("error in closing rabbitMQ consumer", "err", err)
 	}()
 
 	// Log.Printf("got Connection, getting Channel")
