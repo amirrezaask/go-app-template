@@ -1,18 +1,23 @@
-# syntax=docker/dockerfile:1
-
-FROM golang:1.21
-
+FROM golang:1.22-alpine as build
 WORKDIR /app
+ENV GOPROXY="https://repo.snapp.tech/repository/goproxy"
 
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY . ./
-
 # Build
-RUN CGO_ENABLED=0 GOOS=linux go build -o /app-bin ./cmd/server
+COPY . .
+RUN mkdir build
+RUN CGO_ENABLED=0 GOOS=linux go build -o /build/ipg ./cmd/server
+RUN echo "#!/bin/sh" > /build/reload && echo "kill -HUP 1" >> /build/reload && chmod a+x /build/reload
 
+
+FROM alpine:edge as runner 
+COPY --from=build /build /bin
+ENV TZ=Asia/Tehran
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 EXPOSE 8080
 
 # Run
-CMD ["/app-bin"]
+CMD ["/bin/ipg"]
+
