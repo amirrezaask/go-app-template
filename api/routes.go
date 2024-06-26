@@ -11,6 +11,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
+	"gitlab.snappcloud.io/doctor/backend/template/api/sample"
 	_ "gitlab.snappcloud.io/doctor/backend/template/docs"
 	"gitlab.snappcloud.io/doctor/backend/template/storage"
 
@@ -63,6 +64,8 @@ func NewAPIServer(tracingServiceName string, db *storage.MySQL, redis *storage.R
 
 	apiG := e.Group("/api", setTracingSpanMiddleware(tracingServiceName), collector)
 	v1G := e.Group("/v1")
+
+	v1G.GET("/sample/", sample.Index())
 
 	_ = apiG
 	_ = v1G
