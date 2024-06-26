@@ -1,4 +1,9 @@
-# Go Service Template
+# Go App Template
+
+
+## How to use
+1. First replace all {{template}} with your module path.
+2. Enjoy.
 
 ## Libraries
 

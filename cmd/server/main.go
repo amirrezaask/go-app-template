@@ -5,18 +5,16 @@ import (
 	"log/slog"
 	"os"
 
-	"gitlab.snappcloud.io/doctor/backend/template/api"
-	"gitlab.snappcloud.io/doctor/backend/template/config"
-	"gitlab.snappcloud.io/doctor/backend/template/storage"
-	"gitlab.snappcloud.io/doctor/backend/template/tracing"
+	"{{template}}/api"
+	"{{template}}/config"
+	"{{template}}/storage"
+	"{{template}}/tracing"
 )
 
 // @title Go Service Template API
 // @version 1.0
 
-// @contact.name Doctor Backend
-
-// @host snapp.doctor
+// @host app.awesome
 // @BasePath /
 func main() {
 	globalLogger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{

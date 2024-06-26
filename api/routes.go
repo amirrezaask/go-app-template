@@ -11,9 +11,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	echoSwagger "github.com/swaggo/echo-swagger"
 
-	"gitlab.snappcloud.io/doctor/backend/template/api/sample"
-	_ "gitlab.snappcloud.io/doctor/backend/template/docs"
-	"gitlab.snappcloud.io/doctor/backend/template/storage"
+	"{{template}}/api/sample"
+	_ "{{template}}/docs"
+	"{{template}}/storage"
 
 	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
 )

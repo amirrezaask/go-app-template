@@ -1,4 +1,4 @@
-module gitlab.snappcloud.io/doctor/backend/template
+module {{template}}
 
 go 1.21
 

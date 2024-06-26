@@ -1,6 +1,5 @@
 FROM golang:1.22-alpine as build
 WORKDIR /app
-ENV GOPROXY="https://repo.snapp.tech/repository/goproxy"
 
 COPY go.mod go.sum ./
 RUN go mod download
