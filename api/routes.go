@@ -40,6 +40,7 @@ func (d jsonIterSerializer) Deserialize(c echo.Context, i interface{}) error {
 		return echo.NewHTTPError(http.StatusBadRequest, fmt.Sprintf("Syntax error: offset=%v, error=%v", se.Offset, se.Error())).SetInternal(err)
 	}
 	return err
+
 }
 
 func setTracingSpanMiddleware(service string) echo.MiddlewareFunc {
